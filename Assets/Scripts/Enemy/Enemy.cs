@@ -5,7 +5,7 @@ public class Enemy : PoolableObject, IInteractable
 {
     [SerializeField] private Collider2D _collider;
     [SerializeField] private EnemyShooter _shooter;
-    [SerializeField] private EnemyStateMachineCreator stateMachineFactory;
+    [SerializeField] private EnemyStateMachineCreator _stateMachineCreator;
 
     private EnemyMover _enemyMover;
     private StateMachine _stateMachine;
@@ -24,7 +24,7 @@ public class Enemy : PoolableObject, IInteractable
     {
         _enemyMover = new EnemyMover(transform);
         _shooter.Initialize(getBulletFunc);
-        _stateMachine = stateMachineFactory.Create(_enemyMover, player, _collider, _shooter,
+        _stateMachine = _stateMachineCreator.Create(_enemyMover, player, _collider, _shooter,
                                                   OnDeactivated, out _changeStateToAppear,
                                                   out _changeStateToDead);
     }

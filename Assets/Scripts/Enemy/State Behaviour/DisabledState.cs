@@ -2,15 +2,15 @@ using System;
 
 public class DisabledState : State
 {
-    private Action _deactiveDelegate;
+    private Action _enemyDeactiveDelegate;
 
     public DisabledState(IStateChanger stateChanger, Action deactiveDelegate) : base(stateChanger)
     {
-        _deactiveDelegate = deactiveDelegate;
+        _enemyDeactiveDelegate = deactiveDelegate;
     }
 
     public override void Enter()
     {
-        _deactiveDelegate?.Invoke();
+        _enemyDeactiveDelegate?.Invoke();
     }
 }

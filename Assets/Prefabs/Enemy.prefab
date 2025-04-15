@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 9128234877672471037}
   - component: {fileID: 3630046674588466902}
   - component: {fileID: 8977401949887649171}
+  - component: {fileID: 4856179004046486066}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -202,10 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collider: {fileID: 3923921761470492895}
   _shooter: {fileID: 8977401949887649171}
-  _appearSpeed: 8
-  _appearOffsetY: 15
-  _deadSpeed: 13
-  _deadOffsetY: -20
+  stateMachineFactory: {fileID: 4856179004046486066}
 --- !u!114 &8977401949887649171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +218,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shootPoint: {fileID: 3103468745460074547}
   _reloadTime: 2.5
+--- !u!114 &4856179004046486066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872915717074819309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7053e952cbd9654faa611fc19b57838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appearSpeed: 8
+  appearOffsetY: 15
+  deadSpeed: 15
+  deadOffsetY: -20
 --- !u!1 &2671255822732336529
 GameObject:
   m_ObjectHideFlags: 0

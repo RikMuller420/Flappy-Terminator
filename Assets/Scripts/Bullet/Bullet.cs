@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : PoolableObject
@@ -10,6 +11,15 @@ public class Bullet : PoolableObject
     private WaitForSeconds _wait;
     private Coroutine _deactivateCoroutine;
     private BulletOwner _owner;
+
+    private readonly Dictionary<System.Type, IBulletHitHandler> _typesHitHandlers = new Dictionary<System.Type, IBulletHitHandler>
+    {
+        { typeof(Ground),   new GroundHitHandler() },
+        { typeof(Enemy),    new EnemyHitHandler() },
+        { typeof(Player),   new PlayerHitHandler() }
+    };
+
+    public BulletOwner Owner => _owner;
 
     private void Awake()
     {
@@ -26,19 +36,9 @@ public class Bullet : PoolableObject
     {
         if (collision.TryGetComponent(out IInteractable interactable))
         {
-            switch (interactable)
+            if (_typesHitHandlers.TryGetValue(interactable.GetType(), out IBulletHitHandler hitHanlder))
             {
-                case Ground ground:
-                    Deactivate();
-                    break;
-
-                case Enemy enemy:
-                    HitEnemy(enemy);
-                    break;
-
-                case Player player:
-                    HitPlayer(player);
-                    break;
+                hitHanlder.Hit(this, interactable);
             }
         }
     }
@@ -49,32 +49,7 @@ public class Bullet : PoolableObject
         _deactivateCoroutine = StartCoroutine(DeactivateInDelay());
     }
 
-    private void HitEnemy(Enemy enemy)
-    {
-        if (_owner == BulletOwner.Player)
-        {
-            enemy.Destroy();
-            Deactivate();
-        }
-    }
-
-    private void HitPlayer(Player player)
-    {
-        if (_owner == BulletOwner.Enemy)
-        {
-            player.Destroy();
-            Deactivate();
-        }
-    }
-
-    private IEnumerator DeactivateInDelay()
-    {
-        yield return _wait;
-
-        Deactivate();
-    }
-
-    private void Deactivate()
+    public void Deactivate()
     {
         if (_deactivateCoroutine != null)
         {
@@ -82,5 +57,12 @@ public class Bullet : PoolableObject
         }
 
         OnDeactivated();
+    }
+
+    private IEnumerator DeactivateInDelay()
+    {
+        yield return _wait;
+
+        Deactivate();
     }
 }

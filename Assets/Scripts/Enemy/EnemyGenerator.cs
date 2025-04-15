@@ -38,13 +38,13 @@ public class EnemyGenerator : MonoBehaviour
     {
         while (enabled)
         {
+            yield return _wait;
+
             Enemy enemy = _enemyPool.Get();
             float positionX = Random.Range(minPositionX, maxPositionX);
             float positionY = Random.Range(minPositionY, maxPositionY);
             enemy.Appear(positionX, positionY);
             enemy.gameObject.SetActive(true);
-
-            yield return _wait;
         }
     }
 }

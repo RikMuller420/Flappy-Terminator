@@ -23,7 +23,6 @@ public class MainMenu : MonoBehaviour
 
     public void OpenStartGameScreen()
     {
-        Debug.Log("OpenStartGameScreen");
         _startScreen.Open();
     }
 

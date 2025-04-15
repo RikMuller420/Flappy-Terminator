@@ -1,6 +1,6 @@
 public class GroundHitHandler : IBulletHitHandler
 {
-    public void Hit(IInteractable interactable, Bullet bullet)
+    public void Hit(Bullet bullet, IInteractable interactable)
     {
         bullet.Deactivate();
     }
